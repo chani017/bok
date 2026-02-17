@@ -42,7 +42,7 @@
   ];
 
   const mobileBreakpoint = 768;
-  const mobileCols = 3;
+  const mobileCols = 5;
 
   function getCols() {
     return window.innerWidth <= mobileBreakpoint ? mobileCols : cols;

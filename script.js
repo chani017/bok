@@ -121,6 +121,36 @@
     setTimeout(updateCardColors, colorDelayMs);
   }
 
+  function flipSome(count) {
+    const cards = grid.querySelectorAll('.card');
+    if (cards.length === 0) return;
+    const n = Math.min(count, cards.length);
+    const indices = [];
+    while (indices.length < n) {
+      const i = Math.floor(Math.random() * cards.length);
+      if (indices.indexOf(i) === -1) indices.push(i);
+    }
+    for (let j = 0; j < indices.length; j++) {
+      const card = cards[indices[j]];
+      card.style.setProperty('--flip-transform', randomDirection());
+      card.classList.toggle('flipped');
+    }
+  }
+
+  const idleDelayMs = 2000;
+  const autoFlipCountMin = 6;
+  const autoFlipCountMax = 8;
+  let idleTimer = null;
+
+  function scheduleAutoFlip() {
+    if (idleTimer) clearTimeout(idleTimer);
+    idleTimer = setTimeout(function () {
+      const count = autoFlipCountMin + Math.floor(Math.random() * (autoFlipCountMax - autoFlipCountMin + 1));
+      flipSome(count);
+      scheduleAutoFlip();
+    }, idleDelayMs);
+  }
+
   function render() {
     grid.innerHTML = '';
     const total = countCards();
@@ -156,7 +186,13 @@
   render();
   window.addEventListener('resize', render);
 
-  document.body.addEventListener('click', flipAll);
+  scheduleAutoFlip();
+
+  document.body.addEventListener('click', function () {
+    if (idleTimer) clearTimeout(idleTimer);
+    flipAll();
+    scheduleAutoFlip();
+  });
 
   document.addEventListener('contextmenu', function (e) {
     e.preventDefault();
@@ -170,6 +206,8 @@
   });
   document.addEventListener('touchstart', function (e) {
     if (e.touches.length > 1) e.preventDefault();
+    if (idleTimer) clearTimeout(idleTimer);
+    scheduleAutoFlip();
   }, { passive: false });
   document.addEventListener('dblclick', function (e) {
     e.preventDefault();

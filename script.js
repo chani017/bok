@@ -11,13 +11,16 @@
     return '#000000';
   }
 
-  const svgHanguelPath = 'M335.72,62.19c14.34,2.39,26.28,11.95,26.28,28.67v105.13h364.36v-111.1c0-15.53-13.14-22.7-13.14-22.7l-76.46-43.01c-10.75-5.97-5.97-20.31,4.78-19.11l158.88,20.31c14.34,2.39,26.28,11.95,26.28,28.67v397.81l-100.35,29.87v-66.9h-131.41v186.36h189.94c16.72,0,29.87-4.78,40.62-11.95l63.32-44.2c13.14-10.75,29.86-11.95,43.01-7.17l120.65,38.23c13.14,3.58,25.09,13.14,25.09,29.87,0,20.31-16.72,31.06-34.65,29.87l-232.95-17.92h-483.82c-35.84,0-57.34,14.34-57.34,14.34l-47.78,32.25c-27.48,17.92-59.73,3.58-59.73,3.58l-146.94-60.93c-7.17-2.39-11.95-7.17-11.95-15.53s8.36-14.34,16.72-13.14l277.15,22.7h197.11v-186.36h-131.41v38.23l-100.35,29.87V126.7c0-15.53-13.14-22.7-13.14-22.7l-76.46-43.01c-10.75-5.97-5.97-20.31,4.78-19.11l158.88,20.31ZM864.93,756.26l-11.95,25.09v268.79l-100.35,29.87v-320.16h-357.19c-10.75,0-19.11,5.97-19.11,5.97l-44.2,28.67c-9.56,5.97-26.28,10.75-40.62,3.58l-101.54-52.56c-10.75-5.97-5.97-20.31,5.97-19.11l188.75,16.72h334.49c11.95-1.19,22.7-5.97,28.67-14.34,5.97-8.36,16.72-15.53,31.06-11.95l77.65,19.11c10.75,2.39,13.14,10.75,8.36,20.31ZM362,393.1h364.36v-180.39h-364.36v180.39Z';
-  const svgHanjaPath = 'M412.45,519.11c57.18,25.29,74.77,32.99,128.65,61.58h348.56c21.99-25.29,29.69-32.99,52.78-58.28,39.58,25.29,51.68,32.99,86.87,58.28,12.1,7.7,16.49,14.29,16.49,20.89,0,11-7.7,17.59-31.89,32.99q0,157.24,4.4,392.54c0,12.1-3.3,17.59-14.29,20.89-9.9,4.4-45.08,7.7-75.87,7.7-23.09,0-29.69-3.3-30.79-17.59v-50.58h-366.16v39.58c-1.1,15.39-5.5,20.89-17.59,24.19-7.7,2.2-48.38,5.5-69.27,5.5-24.19,0-31.89-5.5-31.89-21.99v-2.2c4.4-131.95,4.4-156.14,4.4-294.68v-64.88c-8.8,28.59-36.29,52.78-58.28,52.78-15.39,0-20.89-7.7-26.39-42.88-12.1-75.87-30.79-125.35-51.68-144.04v238.61c0,39.58,1.1,123.15,2.2,252.9-2.2,20.89-17.59,26.39-75.87,26.39-36.29,0-42.88-3.3-43.98-21.99,3.3-146.24,4.4-227.61,4.4-244.1v-169.33c-29.69,29.69-64.87,57.18-138.55,105.56l-9.9-12.09c60.48-62.68,102.26-117.65,151.74-200.12,52.78-86.87,80.27-146.24,107.76-229.81H115.57c-31.89,0-47.28,1.1-72.57,5.5l-6.6-37.39c30.79,6.6,47.28,8.8,79.17,8.8h48.38v-130.85c0-31.89-1.1-48.38-6.6-84.67,130.85,12.1,137.45,13.19,149.54,16.49,8.8,3.3,14.29,7.7,14.29,13.19,0,11-14.29,19.79-42.88,29.69v156.14h24.19c20.89-25.29,27.49-32.99,49.48-57.18,34.09,27.49,43.98,35.19,75.87,63.77,8.8,8.8,12.1,14.29,12.1,18.69,0,7.7-12.1,15.39-41.78,24.19-48.38,95.66-65.97,125.35-117.65,190.22v14.29c68.17,28.59,119.85,69.27,135.25,105.56l-3.3-102.26ZM401.46,102.37c29.69,7.7,54.98,9.9,93.46,9.9h362.86l81.37-89.06c49.48,39.58,65.97,52.78,116.55,94.56,3.3,5.5,5.5,7.7,5.5,11s-4.4,6.6-12.1,6.6H494.92c-39.58,0-58.28,1.1-85.77,5.5l-7.7-38.48ZM579.58,494.92c-2.2,20.89-15.39,25.29-76.97,25.29-31.89,0-38.48-3.3-39.58-19.79q3.3-138.54,3.3-191.32c0-65.97-1.1-86.87-5.5-127.55,58.28,25.29,74.77,32.99,129.75,62.68h247.4c24.19-27.49,32.99-35.19,59.38-62.68,38.48,27.49,50.58,35.19,85.77,62.68,8.8,7.7,13.19,13.19,13.19,17.59,0,8.8-5.5,13.19-35.19,31.89v34.09c0,41.78,1.1,102.26,3.3,163.83,0,9.9-2.2,14.29-7.7,18.69-9.9,5.5-37.38,9.9-72.57,9.9-30.79,0-36.29-3.3-37.38-19.79v-36.29h-267.19v30.79ZM653.25,761.01v-157.24h-122.05v157.24h122.05ZM653.25,784.1h-122.05v180.33h122.05v-180.33ZM579.58,441.04h267.19v-173.73h-267.19v173.73ZM897.36,603.77h-130.85v157.24h130.85v-157.24ZM766.51,784.1v180.33h130.85v-180.33h-130.85Z';
+  const SVG_HANGUEL = 'SVG/bok_hanguel.svg';
+  const SVG_HANJA = 'SVG/bok_hanja.svg';
 
-  function createCharEl(pathD, textColor) {
+  function createCharEl(svgSrc) {
     const wrap = document.createElement('div');
     wrap.className = 'card-char';
-    wrap.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080"><path fill="' + textColor + '" d="' + pathD + '"/></svg>';
+    const img = document.createElement('img');
+    img.src = svgSrc;
+    img.alt = '';
+    wrap.appendChild(img);
     return wrap;
   }
 
@@ -95,6 +98,345 @@
 
   const colorDelayMs = 50;
 
+  let viewMode = 'grid';
+  let overlayViewEl = null;
+  let overlayStage = null;
+  let flowAnimationId = null;
+
+  function getCardSize() {
+    return window.innerWidth / getCols();
+  }
+
+  function onOverlayTap(e) {
+    if (viewMode === 'circle') { enterFlowSingleMode(); return; }
+    if (viewMode === 'flowSingle') { enterFlowMode(); return; }
+    if (viewMode === 'flow') {
+      e.stopPropagation();
+      e.preventDefault();
+      exitToGrid();
+      scheduleAutoFlip();
+      return;
+    }
+  }
+
+  function enterCircleMode() {
+    const cards = Array.prototype.slice.call(grid.querySelectorAll('.card'));
+    if (cards.length === 0) return;
+
+    const cardRects = cards.map(function (card) { return card.getBoundingClientRect(); });
+    const c = getCols();
+    const cardSize = getCardSize();
+    const N = cards.length;
+    const vmin = Math.min(window.innerWidth, window.innerHeight) / 100;
+    const ringCenter = 60 * vmin;
+    const radius = 38 * vmin;
+
+    overlayViewEl = document.createElement('div');
+    overlayViewEl.className = 'overlay-view';
+    overlayStage = document.createElement('div');
+    overlayStage.className = 'circle-ring';
+    overlayViewEl.appendChild(overlayStage);
+    document.body.appendChild(overlayViewEl);
+
+    const ringRect = overlayStage.getBoundingClientRect();
+    document.body.classList.add('overlay-mode');
+
+    for (let i = 0; i < N; i++) {
+      const r = cardRects[i];
+      const card = cards[i];
+      card.style.position = 'absolute';
+      card.style.width = r.width + 'px';
+      card.style.height = r.height + 'px';
+      card.style.left = (r.left - ringRect.left) + 'px';
+      card.style.top = (r.top - ringRect.top) + 'px';
+      card.style.transform = 'rotate(0deg)';
+      card.classList.remove('flow-strand-1', 'flow-strand-2', 'flow-strand-3');
+      overlayStage.appendChild(card);
+    }
+
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        for (let i = 0; i < N; i++) {
+          const angle = (2 * Math.PI * i) / N - Math.PI / 2;
+          const x = ringCenter + radius * Math.cos(angle) - cardSize / 2;
+          const y = ringCenter + radius * Math.sin(angle) - cardSize / 2;
+          const card = cards[i];
+          card.style.left = x + 'px';
+          card.style.top = y + 'px';
+          card.style.width = cardSize + 'px';
+          card.style.height = cardSize + 'px';
+          card.style.transform = 'rotate(' + (angle * 180 / Math.PI + 90) + 'deg)';
+        }
+      });
+    });
+
+    overlayViewEl.addEventListener('click', onOverlayTap);
+    viewMode = 'circle';
+  }
+
+  function enterFlowSingleMode() {
+    if (flowAnimationId != null) {
+      cancelAnimationFrame(flowAnimationId);
+      flowAnimationId = null;
+    }
+    const cards = Array.prototype.slice.call(overlayStage.querySelectorAll('.card'));
+    const N = cards.length;
+    const cardRects = cards.map(function (c) { return c.getBoundingClientRect(); });
+    const cardSize = getCardSize();
+    const W = window.innerWidth;
+    const H = window.innerHeight;
+    const pad = cardSize * 0.5;
+
+    overlayStage.className = 'flow-single-stage flow-transitioning';
+    overlayStage.style.animation = 'none';
+    const stageRect = overlayStage.getBoundingClientRect();
+
+    cards.forEach(function (card, i) {
+      const r = cardRects[i];
+      card.style.left = (r.left - stageRect.left) + 'px';
+      card.style.top = (r.top - stageRect.top) + 'px';
+      card.style.width = r.width + 'px';
+      card.style.height = r.height + 'px';
+      card.style.transform = 'rotate(0deg)';
+      card.classList.remove('flow-strand-1', 'flow-strand-2', 'flow-strand-3');
+    });
+
+    let curveWidth = W - 2 * pad;
+    let amplitude = H * 0.18;
+    let centerY = H / 2;
+
+    function curveAt(t) {
+      let x = pad + t * curveWidth - cardSize / 2;
+      let y = centerY + amplitude * Math.sin(t * Math.PI * 2) - cardSize / 2;
+      return { x: x, y: y };
+    }
+
+    let flowPhase = 0;
+    let flowSpeed = window.innerWidth > mobileBreakpoint ? 0.004 / 3 : 0.004;
+    function tick() {
+      flowPhase += flowSpeed;
+      if (flowPhase >= 1) flowPhase -= 1;
+      for (let i = 0; i < N; i++) {
+        let t = ((i + 0.5) / N + flowPhase) % 1;
+        if (t < 0) t += 1;
+        let p = curveAt(t);
+        cards[i].style.left = p.x + 'px';
+        cards[i].style.top = p.y + 'px';
+        cards[i].style.width = cardSize + 'px';
+        cards[i].style.height = cardSize + 'px';
+      }
+      flowAnimationId = requestAnimationFrame(tick);
+    }
+
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        for (let i = 0; i < N; i++) {
+          let t = (i + 0.5) / N;
+          let p = curveAt(t);
+          cards[i].style.left = p.x + 'px';
+          cards[i].style.top = p.y + 'px';
+          cards[i].style.width = cardSize + 'px';
+          cards[i].style.height = cardSize + 'px';
+        }
+        setTimeout(function () {
+          if (overlayStage && viewMode === 'flowSingle') {
+            overlayStage.classList.remove('flow-transitioning');
+            flowAnimationId = requestAnimationFrame(tick);
+          }
+        }, 1100);
+      });
+    });
+
+    viewMode = 'flowSingle';
+  }
+
+  function enterFlowMode() {
+    if (flowAnimationId != null) {
+      cancelAnimationFrame(flowAnimationId);
+      flowAnimationId = null;
+    }
+    const cards = Array.prototype.slice.call(overlayStage.querySelectorAll('.card'));
+    const N = cards.length;
+    const cardRects = cards.map(function (c) { return c.getBoundingClientRect(); });
+    const cardSize = getCardSize();
+    const W = window.innerWidth;
+    const H = window.innerHeight;
+    const pad = cardSize * 0.5;
+
+    overlayStage.className = 'flow-stage flow-transitioning';
+    overlayStage.style.animation = 'none';
+    const stageRect = overlayStage.getBoundingClientRect();
+
+    cards.forEach(function (card, i) {
+      const r = cardRects[i];
+      card.style.left = (r.left - stageRect.left) + 'px';
+      card.style.top = (r.top - stageRect.top) + 'px';
+      card.style.width = r.width + 'px';
+      card.style.height = r.height + 'px';
+      card.style.transform = 'rotate(0deg)';
+      card.classList.remove('flow-strand-1', 'flow-strand-2', 'flow-strand-3');
+    });
+
+    // 3가닥: 사인 파형(~) 유지, 화면 끝까지, 더 멀리 퍼지도록
+    const cy = H / 2;
+    const margin = Math.max(W, H) * 0.14;
+    const edge = Math.max(pad, cardSize);
+    const waveAmp = Math.min(W, H) * 0.2;
+    const waveFreq = 2.5;
+
+    let strandStarts = [
+      { x: edge, y: cy - margin },
+      { x: W - edge, y: cy },
+      { x: edge, y: cy + margin }
+    ];
+    let strandEnds = [
+      { x: W - edge, y: edge },
+      { x: edge, y: H - edge },
+      { x: W - edge, y: H - edge }
+    ];
+
+    function pathAt(strand, t) {
+      let s = strandStarts[strand];
+      let e = strandEnds[strand];
+      let dx = e.x - s.x;
+      let dy = e.y - s.y;
+      let len = Math.sqrt(dx * dx + dy * dy) || 1;
+      let centerX = s.x + t * dx;
+      let centerY = s.y + t * dy;
+      let perpX = -dy / len;
+      let perpY = dx / len;
+      let wave = Math.sin(t * Math.PI * 2 * waveFreq) * waveAmp;
+      centerX += perpX * wave;
+      centerY += perpY * wave;
+      return {
+        x: centerX - cardSize / 2,
+        y: centerY - cardSize / 2
+      };
+    }
+
+    let n1 = Math.ceil(N / 3);
+    let n2 = Math.ceil(N / 3);
+    let n3 = N - n1 - n2;
+    let strandCounts = [n1, n2, n3];
+    let strandByIndex = [];
+    let tByIndex = [];
+    for (let s = 0; s < 3; s++) {
+      for (let k = 0; k < strandCounts[s]; k++) {
+        strandByIndex.push(s);
+        tByIndex.push((k + 0.5) / strandCounts[s]);
+      }
+    }
+
+    let flowPhase = 0;
+    let flowSpeed = window.innerWidth > mobileBreakpoint ? 0.001 : 0.003;
+    function tick() {
+      flowPhase += flowSpeed;
+      if (flowPhase >= 1) flowPhase -= 1;
+      for (let i = 0; i < N; i++) {
+        let s = strandByIndex[i];
+        let t = (tByIndex[i] + flowPhase) % 1;
+        if (t < 0) t += 1;
+        let p = pathAt(s, t);
+        cards[i].style.left = p.x + 'px';
+        cards[i].style.top = p.y + 'px';
+        cards[i].style.width = cardSize + 'px';
+        cards[i].style.height = cardSize + 'px';
+      }
+      flowAnimationId = requestAnimationFrame(tick);
+    }
+
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        for (let i = 0; i < N; i++) {
+          let s = strandByIndex[i];
+          let t = tByIndex[i];
+          let p = pathAt(s, t);
+          cards[i].style.left = p.x + 'px';
+          cards[i].style.top = p.y + 'px';
+          cards[i].style.width = cardSize + 'px';
+          cards[i].style.height = cardSize + 'px';
+        }
+        setTimeout(function () {
+          if (overlayStage && viewMode === 'flow') {
+            overlayStage.classList.remove('flow-transitioning');
+            flowAnimationId = requestAnimationFrame(tick);
+          }
+        }, 1100);
+      });
+    });
+
+    viewMode = 'flow';
+  }
+
+  function exitToGrid() {
+    if (!overlayViewEl || !overlayViewEl.parentNode) return;
+    if (flowAnimationId != null) {
+      cancelAnimationFrame(flowAnimationId);
+      flowAnimationId = null;
+    }
+    const cards = Array.prototype.slice.call(overlayStage.querySelectorAll('.card'));
+    const N = cards.length;
+    const c = getCols();
+    const cardRects = cards.map(function (card) { return card.getBoundingClientRect(); });
+
+    document.body.classList.remove('overlay-mode');
+    const gridRect = grid.getBoundingClientRect();
+    const cellSize = getCardSize();
+    const cellWidth = cellSize;
+    const cellHeight = cellSize;
+
+    cards.forEach(function (card, i) {
+      const r = cardRects[i];
+      card.style.position = 'absolute';
+      card.style.left = (r.left - gridRect.left) + 'px';
+      card.style.top = (r.top - gridRect.top) + 'px';
+      card.style.width = r.width + 'px';
+      card.style.height = r.height + 'px';
+      card.style.transform = '';
+      card.classList.remove('flow-strand-1', 'flow-strand-2', 'flow-strand-3');
+      card.classList.add('card-to-grid');
+      grid.appendChild(card);
+    });
+
+    overlayViewEl.removeEventListener('click', onOverlayTap);
+    overlayViewEl.parentNode.removeChild(overlayViewEl);
+    overlayViewEl = null;
+    overlayStage = null;
+    viewMode = 'grid';
+
+    // PC에서 전환 애니메이션이 재생되도록: 한 프레임 그린 뒤 목표 위치 적용
+    requestAnimationFrame(function () {
+      void grid.offsetHeight;
+      requestAnimationFrame(function () {
+        cards.forEach(function (card, i) {
+          const col = i % c;
+          const row = Math.floor(i / c);
+          card.style.left = (col * cellWidth) + 'px';
+          card.style.top = (row * cellHeight) + 'px';
+          card.style.width = cellWidth + 'px';
+          card.style.height = cellHeight + 'px';
+        });
+
+        let done = 0;
+        function onEnd() {
+          done++;
+          if (done < N) return;
+          cards.forEach(function (card) {
+            card.style.position = '';
+            card.style.left = '';
+            card.style.top = '';
+            card.style.width = '';
+            card.style.height = '';
+            card.classList.remove('card-to-grid');
+          });
+        }
+        cards.forEach(function (card) {
+          card.addEventListener('transitionend', onEnd, { once: true });
+        });
+      });
+    });
+  }
+
   function flipAll() {
     const cards = grid.querySelectorAll('.card');
     for (let i = 0; i < cards.length; i++) {
@@ -128,6 +470,7 @@
   function scheduleAutoFlip() {
     if (idleTimer) clearTimeout(idleTimer);
     idleTimer = setTimeout(function () {
+      if (viewMode !== 'grid') { scheduleAutoFlip(); return; }
       const count = autoFlipCountMin + Math.floor(Math.random() * (autoFlipCountMax - autoFlipCountMin + 1));
       flipSome(count);
       scheduleAutoFlip();
@@ -152,12 +495,12 @@
       const front = document.createElement('div');
       front.className = 'card-face card-front';
       front.style.backgroundColor = frontColors[i];
-      front.appendChild(createCharEl(isHanguel ? svgHanguelPath : svgHanjaPath, getTextColor(frontColors[i])));
+      front.appendChild(createCharEl(isHanguel ? SVG_HANGUEL : SVG_HANJA));
 
       const back = document.createElement('div');
       back.className = 'card-face card-back';
       back.style.backgroundColor = backColors[i];
-      back.appendChild(createCharEl(isHanguel ? svgHanjaPath : svgHanguelPath, getTextColor(backColors[i])));
+      back.appendChild(createCharEl(isHanguel ? SVG_HANJA : SVG_HANGUEL));
 
       inner.appendChild(front);
       inner.appendChild(back);
@@ -173,7 +516,9 @@
 
   document.body.addEventListener('click', function () {
     if (idleTimer) clearTimeout(idleTimer);
-    flipAll();
+    if (viewMode === 'grid') {
+      enterCircleMode();
+    }
     scheduleAutoFlip();
   });
 
@@ -184,7 +529,7 @@
     e.preventDefault();
   });
 
-  document.addEventListener('touchstart', function (e) {
+  document.addEventListener('touchstart', function () {
     if (idleTimer) clearTimeout(idleTimer);
     scheduleAutoFlip();
   }, { passive: true });

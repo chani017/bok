@@ -14,6 +14,7 @@ html {
   min-height: 100dvh;
   -webkit-text-size-adjust: 100%;
   background: #000000;
+  overflow: hidden;
 }
 
 body {
@@ -28,7 +29,8 @@ body {
   -webkit-user-select: none;
   -webkit-user-drag: none;
   cursor: pointer;
-  overflow-x: hidden;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 .grain-overlay {
@@ -46,7 +48,42 @@ body {
   mix-blend-mode: multiply;
 }
 
+body.overlay-mode .grid {
+  visibility: hidden;
+}
+
+/* 단일 ~ 곡선 flow (원 다음) */
+.overlay-view .flow-single-stage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.overlay-view .flow-single-stage .card {
+  transition: none;
+}
+.overlay-view .flow-single-stage.flow-transitioning .card {
+  transition: left 1s cubic-bezier(0.4, 0, 0.2, 1), top 1s cubic-bezier(0.4, 0, 0.2, 1), transform 1s cubic-bezier(0.4, 0, 0.2, 1), width 1s cubic-bezier(0.4, 0, 0.2, 1), height 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 3가닥 flow (단일 곡선 다음) */
+.overlay-view .flow-stage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.overlay-view .flow-stage .card {
+  transition: none;
+}
+.overlay-view .flow-stage.flow-transitioning .card {
+  transition: left 1s cubic-bezier(0.4, 0, 0.2, 1), top 1s cubic-bezier(0.4, 0, 0.2, 1), transform 1s cubic-bezier(0.4, 0, 0.2, 1), width 1s cubic-bezier(0.4, 0, 0.2, 1), height 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .grid {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-auto-rows: calc(100vw / 7);
@@ -61,6 +98,43 @@ body {
     grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: calc(100vw / 3);
   }
+}
+
+/* 공통 오버레이 (원 / 흐름 / 뫼비우스) */
+.overlay-view {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* 강강술래: 원 */
+.overlay-view .circle-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 120vmin;
+  height: 120vmin;
+  margin-left: -60vmin;
+  margin-top: -60vmin;
+  animation: circle-spin 48s linear infinite;
+}
+.overlay-view .circle-ring .card {
+  position: absolute;
+  transition: left 1s cubic-bezier(0.4, 0, 0.2, 1), top 1s cubic-bezier(0.4, 0, 0.2, 1), transform 1s cubic-bezier(0.4, 0, 0.2, 1), width 1s cubic-bezier(0.4, 0, 0.2, 1), height 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes circle-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.grid .card.card-to-grid {
+  position: absolute;
+  transition: left 1s cubic-bezier(0.4, 0, 0.2, 1), top 1s cubic-bezier(0.4, 0, 0.2, 1), width 1s cubic-bezier(0.4, 0, 0.2, 1), height 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card {
@@ -108,8 +182,8 @@ body {
 
 .card-char {
   display: block;
-  width: 80%;
-  height: 80%;
+  width: 75%;
+  height: 75%;
   min-height: 0;
   flex-shrink: 0;
   pointer-events: none;
@@ -126,6 +200,13 @@ body {
 
 .card-char path {
   transition: fill 0.1s ease;
+}
+
+.card-char img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
 }
 
 .card-face img {

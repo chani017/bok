@@ -15,9 +15,17 @@
     'rotateX(-180deg)'
   ];
 
+  const mobileBreakpoint = 768;
+  const mobileRows = 5;
+
+  function isMobile() {
+    return window.innerWidth <= mobileBreakpoint;
+  }
+
   function countCards() {
-    const cardSize = window.innerWidth / cols;
-    const rows = Math.ceil(window.innerHeight / cardSize);
+    const rows = isMobile()
+      ? mobileRows
+      : Math.ceil(window.innerHeight / (window.innerWidth / cols));
     return cols * Math.max(rows, 1);
   }
 

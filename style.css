@@ -11,7 +11,7 @@
 html, body {
   width: 100%;
   min-height: 100vh;
-  background: #000;
+  background: #ffffff;
   font-family: serif;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
@@ -26,6 +26,12 @@ html, body {
   grid-auto-rows: calc(100vw / 7);
   width: 100%;
   min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-auto-rows: calc(100vh / 5);
+  }
 }
 
 .card {

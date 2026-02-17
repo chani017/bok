@@ -107,8 +107,8 @@ body {
 
 .card-char {
   display: block;
-  width: 85%;
-  height: 85%;
+  width: 75%;
+  height: 75%;
   min-height: 0;
   flex-shrink: 0;
   pointer-events: none;

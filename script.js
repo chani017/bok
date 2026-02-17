@@ -2,20 +2,19 @@
   const grid = document.getElementById('grid');
   const cols = 7;
 
-  // 이미지(10x8 타일 그리드)에서 추출한 6색 팔레트
+  // 이미지에서 추출한 고채도 생생한 색상 팔레트 24색
   const palette = [
-    '#FDEDD4', '#F20815', '#11A253', '#FCA4E0', '#155FCC', '#000000', '#FFFFFF'
+    '#000000', '#FFFFFF'
   ];
 
-  const textColorOptionsByBg = {
-    '#FDEDD4': ['#F20815', '#11A253', '#FCA4E0', '#155FCC', '#000000', '#FFFFFF'],
-    '#F20815': ['#FDEDD4', '#11A253', '#FCA4E0', '#155FCC', '#000000', '#FFFFFF'],
-    '#11A253': ['#FDEDD4', '#F20815', '#FCA4E0', '#155FCC', '#000000', '#FFFFFF'],
-    '#FCA4E0': ['#FDEDD4', '#F20815', '#11A253', '#155FCC', '#000000', '#FFFFFF'],
-    '#155FCC': ['#FDEDD4', '#F20815', '#11A253', '#FCA4E0', '#000000', '#FFFFFF'],
-    '#000000': ['#FFFFFF', '#FDEDD4', '#F20815', '#11A253', '#FCA4E0', '#155FCC'],
-    '#FFFFFF': ['#000000', '#FDEDD4', '#F20815', '#11A253', '#FCA4E0', '#155FCC']
-  };
+  // 각 배경색에 대해 나머지 23색 모두를 글자색 옵션으로 사용 (같은 색 제외)
+  const textColorOptionsByBg = (function () {
+    const o = {};
+    for (let i = 0; i < palette.length; i++) {
+      o[palette[i]] = palette.slice(0, i).concat(palette.slice(i + 1));
+    }
+    return o;
+  })();
 
   function getTextColor(bgHex) {
     const options = textColorOptionsByBg[bgHex];
@@ -60,25 +59,17 @@
   }
 
   function buildColors(total) {
-    const c = getCols();
     const colors = [];
     for (let i = 0; i < total; i++) {
-      const used = new Set();
-      if (i % c !== 0) used.add(colors[i - 1]);
-      if (i >= c) used.add(colors[i - c]);
-      colors[i] = pickColor(used);
+      colors[i] = pickColor(new Set());
     }
     return colors;
   }
 
   function buildBackColors(total, frontColors) {
-    const c = getCols();
     const backColors = [];
     for (let i = 0; i < total; i++) {
-      const used = new Set([frontColors[i]]);
-      if (i % c !== 0) used.add(backColors[i - 1]);
-      if (i >= c) used.add(backColors[i - c]);
-      backColors[i] = pickColor(used);
+      backColors[i] = pickColor(new Set([frontColors[i]]));
     }
     return backColors;
   }

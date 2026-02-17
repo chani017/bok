@@ -4,22 +4,11 @@
 
   // 이미지에서 추출한 고채도 생생한 색상 팔레트 24색
   const palette = [
-    '#000000', '#FFFFFF'
+    '#03c57f', '#fe3700', '#fec502', '#0078fd', '#2e2c2d', '#eeeeee'
   ];
 
-  // 각 배경색에 대해 나머지 23색 모두를 글자색 옵션으로 사용 (같은 색 제외)
-  const textColorOptionsByBg = (function () {
-    const o = {};
-    for (let i = 0; i < palette.length; i++) {
-      o[palette[i]] = palette.slice(0, i).concat(palette.slice(i + 1));
-    }
-    return o;
-  })();
-
-  function getTextColor(bgHex) {
-    const options = textColorOptionsByBg[bgHex];
-    if (!options || options.length === 0) return '#000';
-    return options[Math.floor(Math.random() * options.length)];
+  function getTextColor() {
+    return '#000000';
   }
 
   const svgHanguelPath = 'M335.72,62.19c14.34,2.39,26.28,11.95,26.28,28.67v105.13h364.36v-111.1c0-15.53-13.14-22.7-13.14-22.7l-76.46-43.01c-10.75-5.97-5.97-20.31,4.78-19.11l158.88,20.31c14.34,2.39,26.28,11.95,26.28,28.67v397.81l-100.35,29.87v-66.9h-131.41v186.36h189.94c16.72,0,29.87-4.78,40.62-11.95l63.32-44.2c13.14-10.75,29.86-11.95,43.01-7.17l120.65,38.23c13.14,3.58,25.09,13.14,25.09,29.87,0,20.31-16.72,31.06-34.65,29.87l-232.95-17.92h-483.82c-35.84,0-57.34,14.34-57.34,14.34l-47.78,32.25c-27.48,17.92-59.73,3.58-59.73,3.58l-146.94-60.93c-7.17-2.39-11.95-7.17-11.95-15.53s8.36-14.34,16.72-13.14l277.15,22.7h197.11v-186.36h-131.41v38.23l-100.35,29.87V126.7c0-15.53-13.14-22.7-13.14-22.7l-76.46-43.01c-10.75-5.97-5.97-20.31,4.78-19.11l158.88,20.31ZM864.93,756.26l-11.95,25.09v268.79l-100.35,29.87v-320.16h-357.19c-10.75,0-19.11,5.97-19.11,5.97l-44.2,28.67c-9.56,5.97-26.28,10.75-40.62,3.58l-101.54-52.56c-10.75-5.97-5.97-20.31,5.97-19.11l188.75,16.72h334.49c11.95-1.19,22.7-5.97,28.67-14.34,5.97-8.36,16.72-15.53,31.06-11.95l77.65,19.11c10.75,2.39,13.14,10.75,8.36,20.31ZM362,393.1h364.36v-180.39h-364.36v180.39Z';
@@ -40,7 +29,7 @@
   ];
 
   const mobileBreakpoint = 768;
-  const mobileCols = 5;
+  const mobileCols = 3;
 
   function getCols() {
     return window.innerWidth <= mobileBreakpoint ? mobileCols : cols;
@@ -59,17 +48,25 @@
   }
 
   function buildColors(total) {
+    const c = getCols();
     const colors = [];
     for (let i = 0; i < total; i++) {
-      colors[i] = pickColor(new Set());
+      const used = new Set();
+      if (i % c !== 0) used.add(colors[i - 1]);
+      if (i >= c) used.add(colors[i - c]);
+      colors[i] = pickColor(used);
     }
     return colors;
   }
 
   function buildBackColors(total, frontColors) {
+    const c = getCols();
     const backColors = [];
     for (let i = 0; i < total; i++) {
-      backColors[i] = pickColor(new Set([frontColors[i]]));
+      const used = new Set([frontColors[i]]);
+      if (i % c !== 0) used.add(backColors[i - 1]);
+      if (i >= c) used.add(backColors[i - c]);
+      backColors[i] = pickColor(used);
     }
     return backColors;
   }

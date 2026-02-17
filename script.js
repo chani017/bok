@@ -16,17 +16,17 @@
   ];
 
   const mobileBreakpoint = 768;
-  const mobileRows = 5;
+  const mobileCols = 5;
 
-  function isMobile() {
-    return window.innerWidth <= mobileBreakpoint;
+  function getCols() {
+    return window.innerWidth <= mobileBreakpoint ? mobileCols : cols;
   }
 
   function countCards() {
-    const rows = isMobile()
-      ? mobileRows
-      : Math.ceil(window.innerHeight / (window.innerWidth / cols));
-    return cols * Math.max(rows, 1);
+    const c = getCols();
+    const cardSize = window.innerWidth / c;
+    const rows = Math.ceil(window.innerHeight / cardSize);
+    return c * Math.max(rows, 1);
   }
 
   function pickColor(used) {
@@ -35,11 +35,12 @@
   }
 
   function buildColors(total) {
+    const c = getCols();
     const colors = [];
     for (let i = 0; i < total; i++) {
       const used = new Set();
-      if (i % cols !== 0) used.add(colors[i - 1]);
-      if (i >= cols) used.add(colors[i - cols]);
+      if (i % c !== 0) used.add(colors[i - 1]);
+      if (i >= c) used.add(colors[i - c]);
       colors[i] = pickColor(used);
     }
     return colors;

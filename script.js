@@ -2,16 +2,22 @@
   const grid = document.getElementById('grid');
   const cols = 7;
 
-  // 이미지에서 추출한 12개 배경색 + 배경별 대응 글자색
+  // 24색 팔레트 (기존 12색 + 같은 색감의 추가 12색) + 배경별 대응 글자색
   const palette = [
-    '#116B09', '#FF7FAB', '#FF4283', '#C60707', '#1F6BED', '#F4FF1E',
-    '#FF1EC7', '#518DFF', '#6E1221', '#E76290', '#0759A2', '#5196E8'
+    '#000000', '#FFFFFF', '#FF4283', '#C60707', '#1F6BED', '#F4FF1E',
+    '#FF1EC7', '#518DFF', '#6E1221', '#E76290', '#0759A2', '#5196E8',
+    '#0D9488', '#FBBF24', '#6366F1', '#10B981', '#F43F5E', '#06B6D4',
+    '#8B5CF6', '#84CC16', '#F97316', '#0EA5E9', '#D946EF', '#34D399'
   ];
   const textColorByBg = {
-    '#116B09': '#FF7FAB', '#FF7FAB': '#116B09', '#FF4283': '#C60707',
+    '#000000': '#FFFFFF', '#FFFFFF': '#000000', '#FF4283': '#C60707',
     '#C60707': '#FF4283', '#1F6BED': '#F4FF1E', '#F4FF1E': '#1F6BED',
     '#FF1EC7': '#F4FF1E', '#518DFF': '#FF1EC7', '#6E1221': '#E76290',
-    '#E76290': '#0759A2', '#0759A2': '#E76290', '#5196E8': '#0759A2'
+    '#E76290': '#0759A2', '#0759A2': '#E76290', '#5196E8': '#0759A2',
+    '#0D9488': '#FBBF24', '#FBBF24': '#0D9488', '#6366F1': '#FBBF24',
+    '#10B981': '#6E1221', '#F43F5E': '#F4FF1E', '#06B6D4': '#6E1221',
+    '#8B5CF6': '#F4FF1E', '#84CC16': '#6E1221', '#F97316': '#0759A2',
+    '#0EA5E9': '#F4FF1E', '#D946EF': '#F4FF1E', '#34D399': '#6E1221'
   };
 
   function getTextColor(bgHex) {
@@ -24,8 +30,7 @@
   function createCharEl(pathD, textColor) {
     const wrap = document.createElement('div');
     wrap.className = 'card-char';
-    wrap.style.color = textColor;
-    wrap.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080"><path fill="currentColor" d="' + pathD + '"/></svg>';
+    wrap.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080"><path fill="' + textColor + '" d="' + pathD + '"/></svg>';
     return wrap;
   }
 
@@ -37,7 +42,7 @@
   ];
 
   const mobileBreakpoint = 768;
-  const mobileCols = 5;
+  const mobileCols = 3;
 
   function getCols() {
     return window.innerWidth <= mobileBreakpoint ? mobileCols : cols;
@@ -83,12 +88,33 @@
     return flipDirections[Math.floor(Math.random() * flipDirections.length)];
   }
 
+  function updateCardColors() {
+    const cards = grid.querySelectorAll('.card');
+    const total = cards.length;
+    const frontColors = buildColors(total);
+    const backColors = buildBackColors(total, frontColors);
+    for (let i = 0; i < total; i++) {
+      const card = cards[i];
+      const front = card.querySelector('.card-front');
+      const back = card.querySelector('.card-back');
+      front.style.backgroundColor = frontColors[i];
+      back.style.backgroundColor = backColors[i];
+      const frontPath = front.querySelector('.card-char path');
+      const backPath = back.querySelector('.card-char path');
+      if (frontPath) frontPath.setAttribute('fill', getTextColor(frontColors[i]));
+      if (backPath) backPath.setAttribute('fill', getTextColor(backColors[i]));
+    }
+  }
+
+  const colorDelayMs = 300;
+
   function flipAll() {
     const cards = grid.querySelectorAll('.card');
     for (let i = 0; i < cards.length; i++) {
       cards[i].style.setProperty('--flip-transform', randomDirection());
       cards[i].classList.toggle('flipped');
     }
+    setTimeout(updateCardColors, colorDelayMs);
   }
 
   function render() {
@@ -132,6 +158,16 @@
     e.preventDefault();
   });
   document.addEventListener('dragstart', function (e) {
+    e.preventDefault();
+  });
+
+  document.addEventListener('gesturestart', function (e) {
+    e.preventDefault();
+  });
+  document.addEventListener('touchstart', function (e) {
+    if (e.touches.length > 1) e.preventDefault();
+  }, { passive: false });
+  document.addEventListener('dblclick', function (e) {
     e.preventDefault();
   });
 })();

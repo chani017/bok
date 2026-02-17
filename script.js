@@ -201,15 +201,8 @@
     e.preventDefault();
   });
 
-  document.addEventListener('gesturestart', function (e) {
-    e.preventDefault();
-  });
   document.addEventListener('touchstart', function (e) {
-    if (e.touches.length > 1) e.preventDefault();
     if (idleTimer) clearTimeout(idleTimer);
     scheduleAutoFlip();
-  }, { passive: false });
-  document.addEventListener('dblclick', function (e) {
-    e.preventDefault();
-  });
+  }, { passive: true });
 })();

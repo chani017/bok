@@ -78,8 +78,8 @@ html, body {
 
 .card-char {
   display: block;
-  width: 70%;
-  height: 70%;
+  width: 85%;
+  height: 85%;
   min-height: 0;
   flex-shrink: 0;
   pointer-events: none;
@@ -99,8 +99,8 @@ html, body {
 }
 
 .card-face img {
-  width: 70%;
-  height: 70%;
+  width: 96%;
+  height: 96%;
   object-fit: contain;
   pointer-events: none;
   -webkit-user-drag: none;

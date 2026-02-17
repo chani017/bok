@@ -98,6 +98,8 @@ body {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   transition: background-color 0.1s ease;
+  outline: 2px solid black;
+  outline-offset: -2px;
 }
 
 .card-back {

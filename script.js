@@ -2,14 +2,9 @@
   const grid = document.getElementById('grid');
   const cols = 7;
 
-  // 이미지에서 추출한 고채도 생생한 색상 팔레트 24색
   const palette = [
     '#03c57f', '#fe3700', '#fec502', '#0078fd', '#2e2c2d', '#eeeeee'
   ];
-
-  function getTextColor() {
-    return '#000000';
-  }
 
   const SVG_HANGUEL = 'SVG/bok_hanguel.svg';
   const SVG_HANJA = 'SVG/bok_hanja.svg';
@@ -85,14 +80,8 @@
     const backColors = buildBackColors(total, frontColors);
     for (let i = 0; i < total; i++) {
       const card = cards[i];
-      const front = card.querySelector('.card-front');
-      const back = card.querySelector('.card-back');
-      front.style.backgroundColor = frontColors[i];
-      back.style.backgroundColor = backColors[i];
-      const frontPath = front.querySelector('.card-char path');
-      const backPath = back.querySelector('.card-char path');
-      if (frontPath) frontPath.setAttribute('fill', getTextColor(frontColors[i]));
-      if (backPath) backPath.setAttribute('fill', getTextColor(backColors[i]));
+      card.querySelector('.card-front').style.backgroundColor = frontColors[i];
+      card.querySelector('.card-back').style.backgroundColor = backColors[i];
     }
   }
 
@@ -102,6 +91,13 @@
   let overlayViewEl = null;
   let overlayStage = null;
   let flowAnimationId = null;
+
+  function cancelFlowAnimation() {
+    if (flowAnimationId != null) {
+      cancelAnimationFrame(flowAnimationId);
+      flowAnimationId = null;
+    }
+  }
 
   function getCardSize() {
     return window.innerWidth / getCols();
@@ -184,10 +180,7 @@
   }
 
   function enterFlowSingleMode() {
-    if (flowAnimationId != null) {
-      cancelAnimationFrame(flowAnimationId);
-      flowAnimationId = null;
-    }
+    cancelFlowAnimation();
     const cards = Array.prototype.slice.call(overlayStage.querySelectorAll('.card'));
     const N = cards.length;
     const cardSize = getCardSize();
@@ -195,12 +188,13 @@
     const H = window.innerHeight;
     const pad = cardSize * 0.5;
     const vmin = Math.min(W, H) / 100;
-    const ringCenter = 60 * vmin;
     const radius = 38 * vmin;
 
+    // 클릭 전 원의 위치와 맞춤: overlay 중심 + ringCenter/radius/현재 회전으로 원 공식 계산. 좌표는 클릭 전 overlay만 사용.
+    const overlayRect = overlayViewEl.getBoundingClientRect();
+    const circleCenterX = overlayRect.left + overlayRect.width / 2;
+    const circleCenterY = overlayRect.top + overlayRect.height / 2;
     const rotation = getRotationFromTransform(getComputedStyle(overlayStage).transform);
-    const circleCenterX = W / 2;
-    const circleCenterY = H / 2;
     const circlePositions = [];
     for (let i = 0; i < N; i++) {
       const angle = (2 * Math.PI * i) / N - Math.PI / 2 + rotation;
@@ -211,12 +205,11 @@
 
     overlayStage.className = 'flow-single-stage flow-transitioning';
     overlayStage.style.animation = 'none';
-    const stageRect = overlayStage.getBoundingClientRect();
 
     cards.forEach(function (card, i) {
       const p = circlePositions[i];
-      card.style.left = (p.x - stageRect.left) + 'px';
-      card.style.top = (p.y - stageRect.top) + 'px';
+      card.style.left = (p.x - overlayRect.left) + 'px';
+      card.style.top = (p.y - overlayRect.top) + 'px';
       card.style.width = cardSize + 'px';
       card.style.height = cardSize + 'px';
       card.style.transform = 'rotate(0deg)';
@@ -234,14 +227,13 @@
     }
 
     let flowPhase = 0;
-    let flowSpeed = window.innerWidth > mobileBreakpoint ? 0.002 / 3 : 0.002;
+    let flowSpeed = window.innerWidth > mobileBreakpoint ? 0.0015 / 3 : 0.0015;
     function tick() {
       flowPhase += flowSpeed;
       if (flowPhase >= 1) flowPhase -= 1;
       for (let i = 0; i < N; i++) {
-        let t = ((i + 0.5) / N + flowPhase) % 1;
-        if (t < 0) t += 1;
-        let p = curveAt(t);
+        const t = (((i + 0.5) / N + flowPhase) % 1 + 1) % 1;
+        const p = curveAt(t);
         cards[i].style.left = p.x + 'px';
         cards[i].style.top = p.y + 'px';
         cards[i].style.width = cardSize + 'px';
@@ -273,10 +265,7 @@
   }
 
   function enterFlowMode() {
-    if (flowAnimationId != null) {
-      cancelAnimationFrame(flowAnimationId);
-      flowAnimationId = null;
-    }
+    cancelFlowAnimation();
     const cards = Array.prototype.slice.call(overlayStage.querySelectorAll('.card'));
     const N = cards.length;
     const cardRects = cards.map(function (c) { return c.getBoundingClientRect(); });
@@ -299,7 +288,6 @@
       card.classList.remove('flow-strand-1', 'flow-strand-2', 'flow-strand-3');
     });
 
-    // 3가닥: 사인 파형(~) 유지, 화면 끝까지, 더 멀리 퍼지도록
     const cy = H / 2;
     const margin = Math.max(W, H) * 0.14;
     const edge = Math.max(pad, cardSize);
@@ -336,29 +324,24 @@
       };
     }
 
-    let n1 = Math.ceil(N / 3);
-    let n2 = Math.ceil(N / 3);
-    let n3 = N - n1 - n2;
-    let strandCounts = [n1, n2, n3];
-    let strandByIndex = [];
-    let tByIndex = [];
-    for (let s = 0; s < 3; s++) {
+    const nStrand = Math.ceil(N / 3);
+    const strandCounts = [nStrand, nStrand, N - nStrand * 2];
+    const strandByIndex = [];
+    const tByIndex = [];
+    for (let s = 0; s < 3; s++)
       for (let k = 0; k < strandCounts[s]; k++) {
         strandByIndex.push(s);
         tByIndex.push((k + 0.5) / strandCounts[s]);
       }
-    }
 
     let flowPhase = 0;
-    let flowSpeed = window.innerWidth > mobileBreakpoint ? 0.001 : 0.001;
+    const flowSpeed = window.innerWidth > mobileBreakpoint ? 0.001 : 0.001;
     function tick() {
       flowPhase += flowSpeed;
       if (flowPhase >= 1) flowPhase -= 1;
       for (let i = 0; i < N; i++) {
-        let s = strandByIndex[i];
-        let t = (tByIndex[i] + flowPhase) % 1;
-        if (t < 0) t += 1;
-        let p = pathAt(s, t);
+        const t = ((tByIndex[i] + flowPhase) % 1 + 1) % 1;
+        const p = pathAt(strandByIndex[i], t);
         cards[i].style.left = p.x + 'px';
         cards[i].style.top = p.y + 'px';
         cards[i].style.width = cardSize + 'px';
@@ -392,21 +375,15 @@
 
   function exitToGrid() {
     if (!overlayViewEl || !overlayViewEl.parentNode) return;
-    if (flowAnimationId != null) {
-      cancelAnimationFrame(flowAnimationId);
-      flowAnimationId = null;
-    }
+    cancelFlowAnimation();
     const cards = Array.prototype.slice.call(overlayStage.querySelectorAll('.card'));
     const N = cards.length;
     const c = getCols();
     const cardRects = cards.map(function (card) { return card.getBoundingClientRect(); });
-
-    document.body.classList.remove('overlay-mode');
     const gridRect = grid.getBoundingClientRect();
     const cellSize = getCardSize();
-    const cellWidth = cellSize;
-    const cellHeight = cellSize;
 
+    document.body.classList.remove('overlay-mode');
     cards.forEach(function (card, i) {
       const r = cardRects[i];
       card.style.position = 'absolute';
@@ -431,12 +408,9 @@
       void grid.offsetHeight;
       requestAnimationFrame(function () {
         cards.forEach(function (card, i) {
-          const col = i % c;
-          const row = Math.floor(i / c);
-          card.style.left = (col * cellWidth) + 'px';
-          card.style.top = (row * cellHeight) + 'px';
-          card.style.width = cellWidth + 'px';
-          card.style.height = cellHeight + 'px';
+          card.style.left = (i % c) * cellSize + 'px';
+          card.style.top = Math.floor(i / c) * cellSize + 'px';
+          card.style.width = card.style.height = cellSize + 'px';
         });
 
         let done = 0;
@@ -471,17 +445,12 @@
   function flipSome(count) {
     const cards = grid.querySelectorAll('.card');
     if (cards.length === 0) return;
-    const n = Math.min(count, cards.length);
-    const indices = [];
-    while (indices.length < n) {
-      const i = Math.floor(Math.random() * cards.length);
-      if (indices.indexOf(i) === -1) indices.push(i);
-    }
-    for (let j = 0; j < indices.length; j++) {
-      const card = cards[indices[j]];
-      card.style.setProperty('--flip-transform', randomDirection());
-      card.classList.toggle('flipped');
-    }
+    const indices = new Set();
+    while (indices.size < Math.min(count, cards.length)) indices.add(Math.floor(Math.random() * cards.length));
+    indices.forEach(function (i) {
+      cards[i].style.setProperty('--flip-transform', randomDirection());
+      cards[i].classList.toggle('flipped');
+    });
   }
 
   const idleDelayMs = 2000;

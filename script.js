@@ -227,7 +227,7 @@
     }
 
     let flowPhase = 0;
-    let flowSpeed = window.innerWidth > mobileBreakpoint ? 0.0015 / 3 : 0.0015;
+    let flowSpeed = window.innerWidth > mobileBreakpoint ? 0.002 / 3 : 0.002;
     function tick() {
       flowPhase += flowSpeed;
       if (flowPhase >= 1) flowPhase -= 1;

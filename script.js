@@ -174,6 +174,15 @@
     viewMode = 'circle';
   }
 
+  function getRotationFromTransform(transform) {
+    if (!transform || transform === 'none') return 0;
+    const m = transform.match(/matrix\(([^)]+)\)/);
+    if (!m) return 0;
+    const parts = m[1].split(',').map(Number);
+    if (parts.length >= 4) return Math.atan2(parts[1], parts[0]);
+    return 0;
+  }
+
   function enterFlowSingleMode() {
     if (flowAnimationId != null) {
       cancelAnimationFrame(flowAnimationId);
@@ -181,22 +190,24 @@
     }
     const cards = Array.prototype.slice.call(overlayStage.querySelectorAll('.card'));
     const N = cards.length;
-    const cardRects = cards.map(function (c) { return c.getBoundingClientRect(); });
     const cardSize = getCardSize();
     const W = window.innerWidth;
     const H = window.innerHeight;
     const pad = cardSize * 0.5;
 
+    // 클릭 직전 화면과 동일: 카드 실제 위치 + overlay 기준(클릭 전 고정)으로 전환 시작
+    const overlayRect = overlayViewEl.getBoundingClientRect();
+    const cardRects = cards.map(function (c) { return c.getBoundingClientRect(); });
+
     overlayStage.className = 'flow-single-stage flow-transitioning';
     overlayStage.style.animation = 'none';
-    const stageRect = overlayStage.getBoundingClientRect();
 
     cards.forEach(function (card, i) {
       const r = cardRects[i];
-      card.style.left = (r.left - stageRect.left) + 'px';
-      card.style.top = (r.top - stageRect.top) + 'px';
-      card.style.width = r.width + 'px';
-      card.style.height = r.height + 'px';
+      card.style.left = (r.left - overlayRect.left) + 'px';
+      card.style.top = (r.top - overlayRect.top) + 'px';
+      card.style.width = cardSize + 'px';
+      card.style.height = cardSize + 'px';
       card.style.transform = 'rotate(0deg)';
       card.classList.remove('flow-strand-1', 'flow-strand-2', 'flow-strand-3');
     });

@@ -194,18 +194,29 @@
     const W = window.innerWidth;
     const H = window.innerHeight;
     const pad = cardSize * 0.5;
+    const vmin = Math.min(W, H) / 100;
+    const ringCenter = 60 * vmin;
+    const radius = 38 * vmin;
 
-    // 클릭 직전 화면과 동일: 카드 실제 위치 + overlay 기준(클릭 전 고정)으로 전환 시작
-    const overlayRect = overlayViewEl.getBoundingClientRect();
-    const cardRects = cards.map(function (c) { return c.getBoundingClientRect(); });
+    const rotation = getRotationFromTransform(getComputedStyle(overlayStage).transform);
+    const circleCenterX = W / 2;
+    const circleCenterY = H / 2;
+    const circlePositions = [];
+    for (let i = 0; i < N; i++) {
+      const angle = (2 * Math.PI * i) / N - Math.PI / 2 + rotation;
+      const x = circleCenterX + radius * Math.cos(angle) - cardSize / 2;
+      const y = circleCenterY + radius * Math.sin(angle) - cardSize / 2;
+      circlePositions.push({ x, y });
+    }
 
     overlayStage.className = 'flow-single-stage flow-transitioning';
     overlayStage.style.animation = 'none';
+    const stageRect = overlayStage.getBoundingClientRect();
 
     cards.forEach(function (card, i) {
-      const r = cardRects[i];
-      card.style.left = (r.left - overlayRect.left) + 'px';
-      card.style.top = (r.top - overlayRect.top) + 'px';
+      const p = circlePositions[i];
+      card.style.left = (p.x - stageRect.left) + 'px';
+      card.style.top = (p.y - stageRect.top) + 'px';
       card.style.width = cardSize + 'px';
       card.style.height = cardSize + 'px';
       card.style.transform = 'rotate(0deg)';
